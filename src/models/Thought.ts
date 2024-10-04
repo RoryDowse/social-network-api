@@ -1,12 +1,50 @@
-import { Schema, model, type Document } from 'mongoose';
+import { Schema, model, type Document, Types } from 'mongoose';
 
 // Define the Thought interface
 interface IThought extends Document {
     thoughtText: string;
     createdAt: Date;
     username: string;
-    reactions: Schema.Types.ObjectId[];
+    reactions: IReaction[];
 }
+
+// Define the Reaction subdocument interface
+interface IReaction extends Document {
+    reactionId: Schema.Types.ObjectId;
+    reactionBody: string;
+    username: string;
+    createdAt: Date;
+}
+
+// Define the Reaction schema
+const reactionSchema = new Schema<IReaction>(
+    {
+        reactionId: {
+            type: Schema.Types.ObjectId,
+            default: () => new Types.ObjectId(), // Automatically generate a new ObjectID
+        },
+        reactionBody: {
+            type: String,
+            required: true,
+            maxlength: 280,
+        },
+        username: {
+            type: String,
+            required: true,
+        },
+        createdAt: {
+            type: Date,
+            default: Date.now,
+            get: (value: Date) => value.toDateString(), // Getter to format the date
+        },
+    },
+        {
+            toJSON: {
+                virtuals: true,
+                getters: true,
+            },
+        },
+);
 
 // Define the Thought schema
 const thoughtSchema = new Schema<IThought>(
@@ -20,20 +58,13 @@ const thoughtSchema = new Schema<IThought>(
         createdAt: {
             type: Date,
             default: Date.now,
-            get: (value: Date) => { // use a virtual
-                return value.toDateString();
-            },
+            get: (value: Date) => value.toDateString(), // Getter to format the date
         },
         username: {
             type: String,
             required: true,
         },
-        reactions: [
-            {
-                type: Schema.Types.ObjectId,
-                ref: 'Reaction', // case sensitive
-            },
-        ],
+        reactions: [reactionSchema], // Use Reaction as a subdocument
     },
     {
         toJSON: {
@@ -43,6 +74,13 @@ const thoughtSchema = new Schema<IThought>(
         timestamps: true,
     },
 );
+
+// Create a virtual property for reactionCount
+thoughtSchema
+.virtual('reactionCount')
+.get(function (this: IThought) { 
+    return this.reactions.length;
+});
 
 const Thought = model<IThought>('Thought', thoughtSchema);
 
