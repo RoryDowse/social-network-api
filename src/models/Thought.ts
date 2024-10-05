@@ -58,7 +58,7 @@ const thoughtSchema = new Schema<IThought>(
         createdAt: {
             type: Schema.Types.Date,
             default: Date.now,
-            get: (value: Date) => value.toDateString(),
+            get: (value: Date) => value.toDateString(), // Getter to format the date
         },
         username: {
             type: String,
