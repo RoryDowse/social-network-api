@@ -3,7 +3,7 @@ import { Schema, model, type Document, Types } from 'mongoose';
 // Define the Thought interface
 interface IThought extends Document {
     thoughtText: string;
-    createdAt: Date;
+    createdAt: Date | string;
     username: string;
     reactions: IReaction[];
 }
@@ -13,7 +13,7 @@ interface IReaction extends Document {
     reactionId: Schema.Types.ObjectId;
     reactionBody: string;
     username: string;
-    createdAt: Date;
+    createdAt: Date | string;
 }
 
 // Define the Reaction schema
@@ -33,7 +33,7 @@ const reactionSchema = new Schema<IReaction>(
             required: true,
         },
         createdAt: {
-            type: Date,
+            type: Schema.Types.Date, // Moongoose-specific date type
             default: Date.now,
             get: (value: Date) => value.toDateString(), // Getter to format the date
         },
@@ -56,9 +56,9 @@ const thoughtSchema = new Schema<IThought>(
             maxlength: 280
         },
         createdAt: {
-            type: Date,
+            type: Schema.Types.Date,
             default: Date.now,
-            get: (value: Date) => value.toDateString(), // Getter to format the date
+            get: (value: Date) => value.toDateString(),
         },
         username: {
             type: String,
