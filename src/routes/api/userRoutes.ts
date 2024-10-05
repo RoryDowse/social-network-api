@@ -20,9 +20,14 @@ router
     .put(updateUser)
     .delete(deleteUser); // ensure controller removes user thoughts
 
+// /api/users/:userId/friends
+router
+    .route('/:userId/friends')
+    .post(addFriend);
+
 // /api/users/:userId/friends/:friendId
 router
     .route('/:userId/friends/:friendId')
-    .post(addFriend).delete(removeFriend);
+    .delete(removeFriend);
 
 export { router as userRouter };
