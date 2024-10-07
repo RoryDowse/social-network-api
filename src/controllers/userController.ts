@@ -22,7 +22,7 @@ export const getUserById = async (req: Request, res: Response) => {
         const user = await User.findById(userId)
         .populate('thoughts')
         .populate('friends');
-        
+
         if (user) {
             res.json({
                 user,
@@ -42,3 +42,13 @@ export const getUserById = async (req: Request, res: Response) => {
         });
     }
 };
+
+// Create a new user
+export const createUser = async (req: Request, res: Response) => {
+    try {
+        const user = await User.create(req.body);
+        res.json(user);
+    } catch (err) {
+        res.status(500).json(err);
+    }
+}
