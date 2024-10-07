@@ -29,8 +29,7 @@ export const getUserById = async (req: Request, res: Response) => {
                 user,
                 thoughts: user.thoughts,
                 friends: user.friends, 
-                friendCount:
-                user.friendCount
+                friendCount: user.friendCount
             });
         } else {
             res.status(404).json({
@@ -113,7 +112,7 @@ export const addFriend = async (req: Request, res: Response) => {
             return res.status(404).json({ message: 'User not found' });
         }
 
-        return res.json({ message: 'Friend added successfully', user });
+        return res.json(user);
     } catch (error: any) {
         return res.status(500).json({ message: error.message });
     }
@@ -121,7 +120,7 @@ export const addFriend = async (req: Request, res: Response) => {
 
 // Remove a friend
 
-export const remoteFriend = async (req: Request, res: Response) => {
+export const removeFriend = async (req: Request, res: Response) => {
     const { userId, friendId } = req.params;
 
     try {

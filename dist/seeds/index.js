@@ -10,7 +10,7 @@ try {
     // Loop 20 times -- add users to the users array
     for (let i = 0; i < 20; i++) {
         // Get some random thought objects using a helper function that we imported from ./data
-        const thoughts = getRandomThought(20);
+        const thoughts = getRandomThought(5);
         const username = getRandomName();
         const first = username.split(' ')[0];
         // const last = username.split(' ')[1];

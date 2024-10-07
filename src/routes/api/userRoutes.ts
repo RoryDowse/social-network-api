@@ -22,12 +22,14 @@ router
 
 // /api/users/:userId/friends
 router
-    .route('/:userId/friends')
+    .route('/:userId/friends/:friendId')
+    // @ts-expect-error temporary
     .post(addFriend);
 
 // /api/users/:userId/friends/:friendId
 router
     .route('/:userId/friends/:friendId')
+    // @ts-expect-error temporary
     .delete(removeFriend);
 
 export { router as userRouter };

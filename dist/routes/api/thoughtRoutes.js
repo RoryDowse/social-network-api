@@ -16,5 +16,6 @@ router
 // /api/thoughts/:thoughtId/reactions/:reactionId
 router
     .route('/:thoughtId/reactions/:reactionId')
+    // @ts-expect-error temporary
     .delete(deleteReaction);
 export { router as thoughtRouter };
