@@ -1,4 +1,3 @@
-// import { ObjectId } from 'mongodb';
 import User from '../models/User.js';
 import Thought from '../models/Thought.js';
 // Get all users
