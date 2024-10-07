@@ -16,6 +16,15 @@ const names = [
   // Get a random full name
   export const getRandomName = () => `${getRandomArrItem(names)} ${getRandomArrItem(names)}`;
   
-  // Get a random thought
-  export const getRandomThought = () => getRandomArrItem(thoughts);
+// Function to generate random thoughts that we can add to user object.
+export const getRandomThought = (int: number) => {
+    const results = [];
+    for (let i = 0; i < int; i++) {
+      results.push({
+        name: getRandomArrItem(thoughts),
+        score: Math.floor(Math.random() * (99 - 70 + 1) + 70),
+      });
+    }
+    return results;
+  };
   

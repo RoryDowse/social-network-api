@@ -75,22 +75,25 @@ export const updateUser = async (req: Request, res: Response) => {
 };
 
 // Delete a user
-export const deleteUser = async (req: Request, res: Response) => {
+export const deleteUser = async (req: Request, res: Response): Promise<void> => {
     try {
         const user = await User.findOneAndDelete({ _id: req.params.userId });
 
         if (!user) {
-            return res.status(404).json({ message: 'User not found' 
+            res.status(404).json({ message: 'User not found' 
             });
+            return;
         }
         
         // Remove user's associated thoughts
         await Thought.deleteMany({ _id: { $in: user.thoughts } });
 
-        return res.json({ message: 'User and associated thoughts deleted' });
+        res.json({ message: 'User and associated thoughts deleted' });
+        return;
     } catch (err) {
         console.log(err);
-        return res.status(500).json(err);
+        res.status(500).json(err);
+        return;
     }
 }
 
