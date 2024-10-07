@@ -1,6 +1,7 @@
 import { Request, Response } from 'express';
 // import { ObjectId } from 'mongodb';
 import User from '../models/User.js';
+import Thought from '../models/Thought.js';
 
 // Get all users
 export const getAllUsers = async (_req: Request, res: Response) => {
@@ -50,5 +51,25 @@ export const createUser = async (req: Request, res: Response) => {
         res.json(user);
     } catch (err) {
         res.status(500).json(err);
+    }
+}
+
+// Delete a user
+export const deleteUser = async (req: Request, res: Response) => {
+    try {
+        const user = await User.findOneAndDelete({ _id: req.params.userId });
+
+        if (!user) {
+            return res.status(404).json({ message: 'User not found' 
+            });
+        }
+        
+        // Remove user's associated thoughts
+        await Thought.deleteMany({ _id: { $in: user.thoughts } });
+
+        return res.json({ message: 'User and associated thoughts deleted' });
+    } catch (err) {
+        console.log(err);
+        return res.status(500).json(err);
     }
 }
