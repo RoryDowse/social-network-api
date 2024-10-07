@@ -54,6 +54,26 @@ export const createUser = async (req: Request, res: Response) => {
     }
 }
 
+// Update a user
+export const updateUser = async (req: Request, res: Response) => {
+    try {
+        const user = await User.findOneAndUpdate(
+            { _id: req.params.userId }, // Query based on the user ID passed in the request paramaters
+            { $set: req.body }, // Update the fields in the user document with the request body data
+            { runValidators: true, new: true } // Run validation and return the updated document
+        );
+        if (!user) {
+            res.status(404).json({ message: 'User not found' });
+        }
+
+        res.json(user)
+    } catch (error: any) {
+        res.status(400).json({
+            message: error.message
+        });
+    }
+};
+
 // Delete a user
 export const deleteUser = async (req: Request, res: Response) => {
     try {
@@ -73,3 +93,7 @@ export const deleteUser = async (req: Request, res: Response) => {
         return res.status(500).json(err);
     }
 }
+
+// Add a friend
+
+// Remove a friend

@@ -27,13 +27,13 @@ const userSchema = new Schema<IUser>(
         thoughts: [
             {
                 type: Schema.Types.ObjectId,
-                ref: 'Thought', // case sensitive
+                ref: 'Thought', 
             },
         ],
         friends: [
             {
                 type: Schema.Types.ObjectId,
-                ref: 'User', // case sensitive
+                ref: 'User', 
             },
         ],
     },
