@@ -18,7 +18,6 @@ export const getRandomThought = (int) => {
     for (let i = 0; i < int; i++) {
         results.push({
             name: getRandomArrItem(thoughts),
-            score: Math.floor(Math.random() * (99 - 70 + 1) + 70),
         });
     }
     return results;
