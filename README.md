@@ -199,7 +199,7 @@ POST /api/users/60b77f4f5b4c7b4a5429e1a1/friends/60b77f4f5b4c7b4a5429e1a2
 DELETE /api/users/60b77f4f5b4c7b4a5429e1a1/friends/60b77f4f5b4c7b4a5429e1a2
 ```
 
-![Screenshot](assets\images\screenshot.png)
+![Screenshot](./assets/images/screenshot.png)
 
 ## License
 
